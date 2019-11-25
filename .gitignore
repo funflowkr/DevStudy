@@ -1,0 +1,10 @@
+/Unity/Temp
+/Unity/Library
+/Unity/obj
+/Unity/ProjectSettings/ProjectVersion.txt
+*.sln
+*.userprefs
+*.csproj
+*.iml
+*.suo
+.idea/*
