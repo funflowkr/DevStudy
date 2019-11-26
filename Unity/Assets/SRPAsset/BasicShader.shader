@@ -3,6 +3,7 @@
 	Properties
 	{
 		_MainTex("Texture", 2D) = "white" {}
+		_Color("Color", Color) = (1,1,1,1)
 	}
 	SubShader
 	{
@@ -38,10 +39,11 @@
 
 			sampler2D _MainTex;
 			float4 _MainTex_ST;
+			fixed4 _Color;
 
 			//CommandBuffer에서 Shader로 전송된다.
 			CBUFFER_START(_Light)
-			float4 _LightDir;
+			float4 _LightDir = float4 (0,1,0,0);
 			CBUFFER_END
 
 			v2f vert(appdata v)
@@ -56,7 +58,7 @@
 
 			fixed4 frag(v2f i) : SV_Target
 			{
-				fixed4 col = tex2D(_MainTex, i.uv);
+				fixed4 col = tex2D(_MainTex, i.uv) * _Color;
 				float NoL = saturate(dot(i.normal, _LightDir.xyz));
 				col *= NoL;
 				UNITY_APPLY_FOG(i.fogCoord, col);
