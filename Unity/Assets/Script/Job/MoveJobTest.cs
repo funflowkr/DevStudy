@@ -9,6 +9,11 @@ using Unity.Mathematics;
 using Unity.Entities;
 using Unity.Burst;
 
+/*
+ * 잡시스템 요약 링크
+ * https://unity3dtuts.com/c-sharp-job-system-in-unity/
+ */
+
 public class MoveJobTest : MonoBehaviour
 {
     public class Cube
@@ -62,6 +67,12 @@ public class MoveJobTest : MonoBehaviour
             };
 
             JobHandle handler = job.Schedule(_cubeList.Count, _cubeList.Count / 10); /// innerloopBatchCount는 잡 워커가 가져갈 반복 횟수??
+
+            /*https://forum.unity.com/threads/burst-and-thread-safe-api-outside-unity-jobs-system.522737/
+             * Schedule doesn't actually schedule the jobs immediately, but add them to a queue. 
+             * Jobs are scheduled when you call JobHandle.ScheduleBatchedJobs or JobHandle.Complete. 
+             * This is done for performance reasons since scheduling individual jobs results in expensive Semaphore.Signal calls. 
+             * By scheduling many jobs at the same time delayed this cost will instead be paid only once per ScheduleBatchedJobs calls.*/
             handler.Complete();
 
             for (int i = 0 ; i < _cubeList.Count ; i++)
