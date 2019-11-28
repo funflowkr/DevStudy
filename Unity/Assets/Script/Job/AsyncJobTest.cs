@@ -83,7 +83,8 @@ public struct AsyncParallelMoveJob : IJobParallelFor
         for (i = 0; i < 1000000; i++)
         {
             v = math.exp10(math.sqrt(v));
-            await Task.Delay(10);
+            if(i != 0 && i % 10000 == 0)
+                await Task.Delay(25);
         }
         Debug.LogFormat("Index : {0} AsyncProcess job End, ThreadID : {1} ", tempIndex, System.Threading.Thread.CurrentThread.ManagedThreadId);
         
