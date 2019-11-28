@@ -52,6 +52,10 @@ public class MoveJobTest : MonoBehaviour
         {
             NativeList<float3> positionList = new NativeList<float3>(Allocator.TempJob);
             NativeList<float> moveYList = new NativeList<float>(Allocator.TempJob);
+            /// string을 Job으로 넘기는 법
+            string s = "Test";
+            NativeArray<byte> byteList = new NativeArray<byte>(s.Length, Allocator.TempJob);
+            byteList.CopyFrom(System.Text.Encoding.ASCII.GetBytes(s));
 
             for (int i = 0; i < _cubeList.Count; i++)
             {
@@ -63,8 +67,10 @@ public class MoveJobTest : MonoBehaviour
             {
                 PositionArray = positionList,
                 MoveYArray = moveYList,
+                StrByteArray = byteList,
                 deltaTime = Time.deltaTime
             };
+
 
             JobHandle handler = job.Schedule(_cubeList.Count, _cubeList.Count / 10); /// innerloopBatchCount는 잡 워커가 가져갈 반복 횟수??
 
@@ -82,6 +88,7 @@ public class MoveJobTest : MonoBehaviour
 
             positionList.Dispose();
             moveYList.Dispose();
+            byteList.Dispose();
         }
         else
         {
@@ -115,6 +122,7 @@ public struct ParallelMoveJob : IJobParallelFor
 
     public NativeArray<float3> PositionArray;
     public NativeArray<float> MoveYArray;
+    public NativeArray<byte> StrByteArray;
     public float deltaTime;// 잡 시스템에서는 Time.deltaTime에 접근이 불가능 메인쓰레드를 사용한다는 보장이 없기 때문?
 
     public void Execute(int index)
@@ -135,6 +143,8 @@ public struct ParallelMoveJob : IJobParallelFor
         {
             v = math.exp10(math.sqrt(v));
         }
+        string s = System.Text.Encoding.ASCII.GetString(StrByteArray.ToArray());
+        //Debug.Log(s);
     }
 }
 
