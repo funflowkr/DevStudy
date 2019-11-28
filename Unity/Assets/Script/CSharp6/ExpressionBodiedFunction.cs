@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using static System.Math;
+using static System.Math; // using static
+
 
 public class ExpressionBodiedFunction : MonoBehaviour
 {
@@ -9,19 +10,24 @@ public class ExpressionBodiedFunction : MonoBehaviour
 	public static string First = "1";
 	public static string Second = "2";
 
-	public string SecondProp { get; }
+    /// <summary>
+    /// Read-only auto-properties
+    /// Auto-property initializers
+    /// </summary>
+	public string SecondProp { get; } = "Auto-property initializers";
 
 	[HideInInspector]
-	public string StrExpression = $"{First}, {Second}";
+    // String interpolation
+    public string StrExpression = $"{First}, {Second}";
 
 	string nullConditional;
 
-	public string ExpressionBodiedFunctionMember1 => StrExpression;
-	public string ExpressionBodiedFunctionMember2() => StrExpression;
+	public string ExpressionBodiedFunctionMember1 => StrExpression; // read-only properties
+    public string ExpressionBodiedFunctionMember2() => StrExpression; // method
 
-	public ExpressionBodiedFunction()
+    public ExpressionBodiedFunction()
 	{
-		SecondProp = "Second";
+		SecondProp = "Read-only auto-properties";
 
 		//var result = Math.Floor(0m);
 		var result = Floor(0m);
@@ -30,7 +36,8 @@ public class ExpressionBodiedFunction : MonoBehaviour
 
 	void Start()
     {
-		var nullStr = nullConditional?.ToString() ?? "nullStr is null";
+        // Null-conditional operators
+        var nullStr = nullConditional?.ToString() ?? "nullStr is null";
 
 		var expStr1 = ExpressionBodiedFunctionMember1;
 		var expStr2 = ExpressionBodiedFunctionMember2();

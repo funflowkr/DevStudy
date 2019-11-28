@@ -25,13 +25,14 @@ public class ExceptionFilter : MonoBehaviour
 				var responseText = await stringTask;
 				TextManager.Instance.Set(responseText);
 			}
-			catch (System.Net.Http.HttpRequestException e) when (e.Message.Contains("301"))
-			{
+			catch (System.Net.Http.HttpRequestException e) when (e.Message.Contains("301")) // Exception filters
+            {
 				TextManager.Instance.Set("Site Moved");
 			}
 		}
 
-		TextManager.Instance.Set(nameof(ExceptionFilter), 1);
+        // The nameof expression
+        TextManager.Instance.Set(nameof(ExceptionFilter), 1);
 	}
 
     // Update is called once per frame
