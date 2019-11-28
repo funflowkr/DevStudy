@@ -46,7 +46,8 @@ public class AsyncJobTest : MonoBehaviour
 
     private void Update()
     {
-        _cubeList[0].Form.Rotate(Vector3.forward * Time.deltaTime * 30f);
+        foreach(var cube in _cubeList)
+            cube.Form.Rotate(Vector3.forward * Time.deltaTime * 30f);
 
         if (Input.GetMouseButtonDown(0))
         {
