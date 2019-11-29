@@ -1,0 +1,30 @@
+SRP (Scriptable Render Pipeline)
+랜더링파이프 라인을 C#스크립트로 제어할 수 있게 한것 2018버전부터 도입되었다.
+로우 레벨 렌더링 파트는 유니티에서 C++로 구현되어있다.
+포스트 프로세싱 처리에 유리
+
+SRP가 지원되더라도 사용하려면 많은 지식을 요하기 때문에 
+유니티에서 미리 만들어둔 SRP가 있다.
+
+- HDRP(High Definition render pipeline)
+	고사양 그래픽을 구현하는데 적합한 파이프라인
+	기존 빌트인에 구현되어있는 디퍼드, 포워드보다 더 낫다.
+
+- LWRP(Lightweight Render Pipeline)
+	2019.1 버전에서 정식출시
+ 	2019.3 버전부터는 유니버셜 파이프라인으로 이름을 변경
+		포스트 프로세싱이 정식으로 포함되었다.(이전에는 별도의 패키지가 필요)
+	퍼포먼스 최적화 파이프라인
+	모바일, VR, AR등 성능에 민감한 환경에서 성능이 좋다.
+	
+	Built in 과 LWRP의 비교
+	https://docs.unity3d.com/Packages/com.unity.render-pipelines.lightweight@5.7/manual/lwrp-builtin-feature-comparison.html?_ga=2.162490492.1580074775.1574673934-1364114062.1555648992
+
+		
+- 기존 프로젝트를 LWRP나 HDRP로 업그레이드?
+	LWRP, HDRP는 모두 커스텀 셰이더를 사용하고, 빌트인 Unity 셰이더(기존 셰이더)와 호환되지 않습니다.
+	업그레이드는 권장하는 방법이 아니고 프로젝트 시작단계에서 사용할 렌더링파이프라인을 정하는것을 추천하고 있습니다.
+	https://docs.unity3d.com/kr/2019.2/Manual/ScriptableRenderPipeline.html#convert-existing-project
+		
+	
+

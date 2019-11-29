@@ -41,13 +41,13 @@ public class CustomSRP : RenderPipeline
             cmd.Release();
 
             // 불투명 오브젝트 그리기
-            var settings = new DrawRendererSettings(camera, new ShaderPassName("ForwardBase"));
+            var settings = new DrawRendererSettings(camera, new ShaderPassName("ForwardBase")); //셰이더 스크립트의 Pass 부분과 일치
             settings.sorting.flags = SortFlags.CommonOpaque;
 
             var filterSetting = new FilterRenderersSettings(true) { renderQueueRange = RenderQueueRange.opaque };
             context.DrawRenderers(cull.visibleRenderers, ref settings, filterSetting);
 
-            context.DrawSkybox(camera);
+            context.DrawSkybox(camera); //스카이박스 그리기
 
             context.Submit();
         }

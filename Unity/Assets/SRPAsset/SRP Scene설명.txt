@@ -1,0 +1,38 @@
+SRP Scene설명
+
+
+예제 오브젝트가 에디터에서 마젠타 색상으로 깨져서 나오는데
+Project 세팅에 SRP 세팅을 해놓게 되면 기존 셰이더들은 
+호환이 되지 않아 렌더링이 안되게 됩니다.
+때문에 다른 예제들에 영향을 미칠 수 있어서 설정하지 않았습니다.
+플레이시 스크립트로 LWRP를 세팅하게 해놓았습니다.
+
+에디터에서 바로 확인하고 싶으시면 SRPAsset/CustomSRPAsset.asset을 아래의 설정에 추가하시면 됩니다.
+Project Setting > Graphics > Scriptable Render Pipeline Settings
+
+
+스크립트
+Asset/Script/ScriptableRenderPipeline 폴더에 SRP 관련 스크립트가 모여있습니다.
+
+CustomSRPAsset.cs = CustomSRP클래스를 사용하는 SRP asset을 생성합니다.
+	RenderPipelineAsset 을 상속 InternalCreatePipeline 함수 구현
+	
+CustomSRP.cs = 렌더링을 처리하는 스크립트
+	그림자 연산을 하지 않아서 그림자가 그려지지 않습니다.
+	기존의 빌트인 파이프라인의 셰이더와 호환되지 않기 때문에
+	기본적인 렌더링을 하기 위해서 기본 셰이더가 필요하게 됩니다.
+	
+	RenderPipeline 상속
+	Render 함수(오버라이드)를 통해 랜더링
+		context = 그래픽 하드웨어와 통신
+		cameras = 월드에 배치되어있는 카메라
+	
+	
+	특수한 상황이 아니라면 유니티에서 제공하는 LWRP또는 HDRP를 적용후
+	필요한 부분만 커스텀하거나 확장하여 사용하는것이 좋아보입니다.
+	
+	
+SRPBattching
+
+머티리얼 데이터가 변경되지 않을때 GPU메모리에 유지하여 렌더링 속도를 높이는 방법
+https://blogs.unity3d.com/kr/2019/02/28/srp-batcher-speed-up-your-rendering/
