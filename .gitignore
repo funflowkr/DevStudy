@@ -8,3 +8,7 @@
 *.iml
 *.suo
 .idea/*
+Unity/.vs/Unity/v15/Server/sqlite3/storage.ide-shm
+Unity/.vs/Unity/v15/Server/sqlite3/db.lock
+Unity/.vs/Unity/v15/Server/sqlite3/storage.ide
+Unity/.vs/Unity/v15/Server/sqlite3/storage.ide-wal
