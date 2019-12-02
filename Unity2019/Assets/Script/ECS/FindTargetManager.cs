@@ -20,7 +20,7 @@ public class FindTargetManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _entityManager = World.Active.EntityManager;
+        _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
         SpwanUnitEntity();
 
@@ -77,3 +77,8 @@ public class FindTargetManager : MonoBehaviour
 
 public struct Unit : IComponentData { }
 public struct Target : IComponentData { }
+
+public struct HasTarget : IComponentData
+{
+    public Entity targetEntity;
+}
