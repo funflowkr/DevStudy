@@ -12,7 +12,7 @@ public class FindTargetSystem : ComponentSystem
     {
 
         //World.Active.GetOrCreateManager<EntityManager>().Get
-        var entityManager = World.Active.GetOrCreateManager<EntityManager>();
+        var entityManager = World.Active.EntityManager;
         var units = entityManager.GetAllEntities().Where( r => entityManager.HasComponent<Unit>(r));
         var targets = entityManager.GetAllEntities().Where(r => entityManager.HasComponent<Target>(r));
 
