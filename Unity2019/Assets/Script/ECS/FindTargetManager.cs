@@ -20,7 +20,7 @@ public class FindTargetManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _entityManager = World.Active.GetOrCreateManager<EntityManager>();
+        _entityManager = World.Active.EntityManager;
 
         SpwanUnitEntity();
 
@@ -33,7 +33,7 @@ public class FindTargetManager : MonoBehaviour
     private void SpwanUnitEntity()
     {
         Entity entity = _entityManager.CreateEntity(
-            typeof(Position),
+            typeof(Translation),
             typeof(LocalToWorld),
             typeof(RenderMesh),
             typeof(Scale),
@@ -47,7 +47,7 @@ public class FindTargetManager : MonoBehaviour
     private void SpwanTargetEntity()
     {
         Entity entity = _entityManager.CreateEntity(
-            typeof(Position),
+            typeof(Translation),
             typeof(LocalToWorld),
             typeof(RenderMesh),
             typeof(Scale),
@@ -67,7 +67,7 @@ public class FindTargetManager : MonoBehaviour
         });
 
 
-        _entityManager.SetComponentData<Position>(entity, new Position
+        _entityManager.SetComponentData<Translation>(entity, new Translation
         {
             Value = spawnPosition
         });
