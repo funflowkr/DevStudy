@@ -9,6 +9,7 @@
     "com.unity.purchasing": "2.0.3",
     "com.unity.render-pipelines.core": "4.10.0-preview",
     "com.unity.render-pipelines.lightweight": "4.10.0-preview",
+    "com.unity.rendering.hybrid": "0.0.1-preview.4",
     "com.unity.scriptablebuildpipeline": "1.5.4",
     "com.unity.shadergraph": "4.10.0-preview",
     "com.unity.textmeshpro": "1.4.1",
