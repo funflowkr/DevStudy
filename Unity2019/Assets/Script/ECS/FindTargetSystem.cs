@@ -15,14 +15,14 @@ public class FindTargetSystem : ComponentSystem
 
         Entities.WithNone<HasTarget>().WithAll<Unit>().ForEach((Entity unitEntity, ref Translation unitTranslation) => 
         {
-            Debug.Log("Unit " + unitEntity);
+            //Debug.Log("Unit " + unitEntity);
             Entity closestTargetEntity = Entity.Null;
             float3 unitPosition = unitTranslation.Value;
             float3 closestTargetPosition = float3.zero;
 
             Entities.WithAll<Target>().ForEach((Entity targetEntity, ref Translation targetTranslation) =>
             {
-                Debug.Log("Target " + targetEntity);
+                //Debug.Log("Target " + targetEntity);
 
                 if (closestTargetEntity == Entity.Null)
                 {
