@@ -12,6 +12,7 @@ public class FindTargetSystem : ComponentSystem
     protected override void OnUpdate()
     {
         var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        List<Entity> alreadySelecteds = new List<Entity>();
 
         Entities.WithNone<HasTarget>().WithAll<Unit>().ForEach((Entity unitEntity, ref Translation unitTranslation) => 
         {
@@ -28,13 +29,16 @@ public class FindTargetSystem : ComponentSystem
                 {
                     closestTargetEntity = targetEntity;
                     closestTargetPosition = targetTranslation.Value;
+                    alreadySelecteds.Add(closestTargetEntity);
                 }
                 else
                 {
-                    if (math.distance(unitPosition, targetTranslation.Value) < math.distance(unitPosition, closestTargetPosition))
+                    /// 선택되지 않은 타겟중에 가장 가까운 타겟을 고른다.
+                    if (math.distance(unitPosition, targetTranslation.Value) < math.distance(unitPosition, closestTargetPosition) && !alreadySelecteds.Contains(targetEntity))
                     {
                         closestTargetEntity = targetEntity;
                         closestTargetPosition = targetTranslation.Value;
+                        alreadySelecteds.Add(closestTargetEntity);
                     }
                 }
             });
@@ -46,7 +50,6 @@ public class FindTargetSystem : ComponentSystem
                 {
                     targetEntity = closestTargetEntity
                 });
-                //World.Active.EntityManager.GetComponentData<Translation>(closestTargetEntity);
             }
         });
     }
