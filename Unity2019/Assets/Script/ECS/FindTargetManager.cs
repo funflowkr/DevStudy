@@ -5,6 +5,7 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using Unity.Rendering;
+using System.Linq;
 
 public class FindTargetManager : MonoBehaviour
 {
@@ -18,15 +19,31 @@ public class FindTargetManager : MonoBehaviour
     private static EntityManager _entityManager;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        _entityManager = World.Active.EntityManager;
+        _entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
 
-        SpwanUnitEntity();
+        for(int i = 0; i < 5 ; i++)
+            SpwanUnitEntity();
 
         for (int i = 0 ; i < 10 ; ++i)
-        {
             SpwanTargetEntity();
+
+        StartCoroutine(SpwanTargetCo());
+    }
+
+    private IEnumerator SpwanTargetCo()
+    {
+        while(true)
+        {
+            int count = _entityManager.GetAllEntities().Where(r => _entityManager.HasComponent<Target>(r)).Count();
+            if (count < 40)
+            {
+                for (int i = 0; i < 10; ++i)
+                    SpwanTargetEntity();
+            }
+
+            yield return null;
         }
     }
 
@@ -77,3 +94,8 @@ public class FindTargetManager : MonoBehaviour
 
 public struct Unit : IComponentData { }
 public struct Target : IComponentData { }
+
+public struct HasTarget : IComponentData
+{
+    public Entity targetEntity;
+}

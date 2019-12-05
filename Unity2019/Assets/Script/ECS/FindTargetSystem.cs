@@ -5,37 +5,52 @@ using Unity.Entities;
 using Unity.Transforms;
 using Unity.Mathematics;
 using System.Linq;
+using Unity.Rendering;
 
 public class FindTargetSystem : ComponentSystem
 {
     protected override void OnUpdate()
     {
+        var entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;
+        List<Entity> alreadySelecteds = new List<Entity>();
 
-        //World.Active.GetOrCreateManager<EntityManager>().Get
-        var entityManager = World.Active.EntityManager;
-        var units = entityManager.GetAllEntities().Where( r => entityManager.HasComponent<Unit>(r));
-        var targets = entityManager.GetAllEntities().Where(r => entityManager.HasComponent<Target>(r));
-
-        foreach (var unit in units)
+        Entities.WithNone<HasTarget>().WithAll<Unit>().ForEach((Entity unitEntity, ref Translation unitTranslation) => 
         {
-            Debug.Log("Unit " + unit);
+            //Debug.Log("Unit " + unitEntity);
             Entity closestTargetEntity = Entity.Null;
+            float3 unitPosition = unitTranslation.Value;
+            float3 closestTargetPosition = float3.zero;
 
-            foreach (var target in targets)
+            Entities.WithAll<Target>().ForEach((Entity targetEntity, ref Translation targetTranslation) =>
             {
-                Debug.Log("Target " + target);
+                //Debug.Log("Target " + targetEntity);
 
                 if (closestTargetEntity == Entity.Null)
                 {
-                    closestTargetEntity = target;
+                    closestTargetEntity = targetEntity;
+                    closestTargetPosition = targetTranslation.Value;
+                    alreadySelecteds.Add(closestTargetEntity);
                 }
                 else
                 {
-                    //if (math.distance())
+                    /// 선택되지 않은 타겟중에 가장 가까운 타겟을 고른다.
+                    if (math.distance(unitPosition, targetTranslation.Value) < math.distance(unitPosition, closestTargetPosition) && !alreadySelecteds.Contains(targetEntity))
+                    {
+                        closestTargetEntity = targetEntity;
+                        closestTargetPosition = targetTranslation.Value;
+                        alreadySelecteds.Add(closestTargetEntity);
+                    }
                 }
-            }
-        }
+            });
 
-        
+            if (closestTargetEntity != Entity.Null)
+            {
+                Debug.DrawLine(unitPosition, closestTargetPosition);
+                PostUpdateCommands.AddComponent(unitEntity, new HasTarget
+                {
+                    targetEntity = closestTargetEntity
+                });
+            }
+        });
     }
 }
