@@ -64,6 +64,9 @@ public class FindTargetJobSystem : JobComponentSystem
         public float3 Position;
     }
 
+    private static Dictionary<int, Entity> _selectedEntity = new Dictionary<int, Entity>();
+
+
     [RequireComponentTag(typeof(Unit))]
     [ExcludeComponent(typeof(HasTarget))]
     private struct FindTargetJob : IJobForEachWithEntity<Translation>
@@ -71,13 +74,9 @@ public class FindTargetJobSystem : JobComponentSystem
         [DeallocateOnJobCompletion][ReadOnly]
         public NativeArray<EntityWithPosition> TargetEntity;
         public EntityCommandBuffer.Concurrent entityCommandBuffer;
-        //NativeList<Entity> alreadySelecteds;
 
         public void Execute(Entity entity, int index, [ReadOnly] ref Translation translation)
         {
-            //if (alreadySelecteds.IsCreated == false)
-            //    alreadySelecteds = new NativeList<Entity>();
-
             Entity closestTargetEntity = Entity.Null;
             float3 unitPosition = translation.Value;
             float3 closestTargetPosition = float3.zero;
@@ -85,29 +84,27 @@ public class FindTargetJobSystem : JobComponentSystem
             for(int i = 0 ; i < TargetEntity.Length ; i++)
             {
                 EntityWithPosition ep = TargetEntity[i];
-                //Debug.Log("Target " + targetEntity);
 
-                if (closestTargetEntity == Entity.Null)
+                if (closestTargetEntity == Entity.Null && !_selectedEntity.ContainsValue(ep.Entity))
                 {
                     closestTargetEntity = ep.Entity;
                     closestTargetPosition = ep.Position;
-                    //alreadySelecteds.Add(closestTargetEntity);
+                    _selectedEntity[entity.Index] = closestTargetEntity;
                 }
                 else
                 {
                     /// 선택되지 않은 타겟중에 가장 가까운 타겟을 고른다.
-                    if (math.distance(unitPosition, ep.Position) < math.distance(unitPosition, closestTargetPosition) /*&& !alreadySelecteds.Contains(ep.Entity)*/)
+                    if (math.distance(unitPosition, ep.Position) < math.distance(unitPosition, closestTargetPosition) && !_selectedEntity.ContainsValue(ep.Entity))
                     {
                         closestTargetEntity = ep.Entity;
                         closestTargetPosition = ep.Position;
-                        //alreadySelecteds.Add(closestTargetEntity);
+                        _selectedEntity[entity.Index] = closestTargetEntity;
                     }
                 }
             }
 
             if (closestTargetEntity != Entity.Null)
             {
-                //Debug.DrawLine(unitPosition, closestTargetPosition);
                 entityCommandBuffer.AddComponent(index, entity, new HasTarget
                 {
                     targetEntity = closestTargetEntity
