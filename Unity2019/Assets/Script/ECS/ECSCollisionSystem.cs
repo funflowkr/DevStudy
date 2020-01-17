@@ -46,6 +46,7 @@ public class ECSCollisionSystem : JobComponentSystem
             physicsVelocityEntities = GetComponentDataFromEntity<PhysicsVelocity>(),
             translationEntities = GetComponentDataFromEntity<Translation>(),
         };
+
         return job.Schedule(StepPhysicsWorld.Simulation, ref BuildPhysicsWorld.PhysicsWorld, inputDeps);
     }
 
