@@ -89,7 +89,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ShowResolutionOverlay: 1
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 1
+  m_UseShadowmask: 0
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -413,6 +413,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6a1c99c059b793449a183447733a410, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  inputString: '{"Powers":[{"Type":5,"Value":5127},{"Type":1,"Value":285},{"Type":3,"Value":96},{"Type":10,"Value":5.4}]}'
 --- !u!4 &512615602
 Transform:
   m_ObjectHideFlags: 0
@@ -1023,11 +1024,11 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 2
     m_MaxSize: 40
-    m_Alignment: 0
+    m_Alignment: 6
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: New Text
 --- !u!222 &1170052855
