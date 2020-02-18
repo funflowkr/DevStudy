@@ -320,16 +320,6 @@ namespace LitJson
                 return null;
             }
 
-			//if (reader.Token == JsonToken.Double)
-			//{
-			//	if (inst_type == typeof(decimal))
-			//		return decimal.Parse(reader.Value.ToString(), CultureInfo.InvariantCulture);
-			//	else if (inst_type == typeof(float))
-			//		return float.Parse(reader.Value.ToString(), CultureInfo.InvariantCulture);
-			//	else if (inst_type == typeof(double))
-			//		return double.Parse(reader.Value.ToString(), CultureInfo.InvariantCulture);
-			//}
-
 			if (reader.Token == JsonToken.Double ||
                 reader.Token == JsonToken.Int ||
                 reader.Token == JsonToken.Long ||
