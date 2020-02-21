@@ -11,11 +11,11 @@ public class ECSRayCastTestManager : MonoBehaviour
         {
             UnityEngine.Ray ray =  Camera.main.ScreenPointToRay(Input.mousePosition);
             Debug.DrawRay(ray.origin, ray.direction * 100f, Color.white, 1f);
-            Debug.Log(RayCast(ray.origin, ray.direction * 100f));
+            Debug.Log(RayCast(ray.origin, ray.direction, 100f));
         }
     }
 
-    private Entity RayCast(Vector3 start, Vector3 end)
+    private Entity RayCast(Vector3 start, Vector3 direction, float distance)
     {
         BuildPhysicsWorld buildPhysicsWorld = World.DefaultGameObjectInjectionWorld.GetExistingSystem<BuildPhysicsWorld>();
         CollisionWorld collisionWorld = buildPhysicsWorld.PhysicsWorld.CollisionWorld;
@@ -23,7 +23,7 @@ public class ECSRayCastTestManager : MonoBehaviour
         RaycastInput raycastInput = new RaycastInput
         {
             Start = start,
-            End = end,
+            End = start + direction * distance,
             Filter = new CollisionFilter()
             {
                 BelongsTo = ~0u,
