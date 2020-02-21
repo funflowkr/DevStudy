@@ -5,7 +5,8 @@ using UniRx;
 using System.Collections.Generic;
 
 /// <summary>
-/// UniRx Subject test component
+/// UniRx Subject
+/// IObservable<T>와 IObserver<T> 두개를 구현한 클래스
 /// 
 /// IDisposable.AddTo
 /// </summary>
