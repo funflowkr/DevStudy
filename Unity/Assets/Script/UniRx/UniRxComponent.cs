@@ -1,15 +1,17 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using System;
+using UnityEngine;
+using UniRx;
 
 public class UniRxComponent : MonoBehaviour
 {
-	public Text textClock;
 
-	void UpdateClock()
+	void Start()
 	{
-		if (textClock == null) return;
+		var clickStream = Observable.EveryUpdate()
+			.Where(_ => Input.GetMouseButtonDown(0));
 
-		System.DateTime nowTime = System.DateTime.Now;
-		textClock.text = nowTime.ToString();
+		clickStream.Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(250)))
+			.Where(xs => xs.Count >= 2)
+			.Subscribe(xs => Debug.Log("DoubleClick Detected! Count:" + xs.Count));
 	}
 }
