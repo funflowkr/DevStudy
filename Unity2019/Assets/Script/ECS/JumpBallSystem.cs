@@ -2,7 +2,7 @@
 using Unity.Entities;
 using Unity.Physics;
 
-public class JunpBallSystem : ComponentSystem
+public class JumpBallSystem : ComponentSystem
 {
     protected override void OnUpdate()
     {

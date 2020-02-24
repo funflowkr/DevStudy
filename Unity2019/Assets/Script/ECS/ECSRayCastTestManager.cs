@@ -26,9 +26,9 @@ public class ECSRayCastTestManager : MonoBehaviour
             End = start + direction * distance,
             Filter = new CollisionFilter()
             {
-                BelongsTo = ~0u,
-                CollidesWith = ~0u, // all 1s, so all layers, collide with everything
-                GroupIndex = 1
+                BelongsTo = ~0u, // A bit mask describing which layers this collider belongs to.
+                CollidesWith = ~0u, //A bit mask describing which layers this collider can collide with. // all 1s, so all layers, collide with everything
+                GroupIndex = 1 // An override for the bit mask checks. If the value in both objects is equal and positive, the objects always collide. If the value in both objects is equal and negative, the objects never collide.
             }
         };
 
