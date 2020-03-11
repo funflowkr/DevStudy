@@ -53,7 +53,6 @@ public class RollerAgent : Agent
 
         // Fell off
         if (transform.localPosition.y < 0)
-        if (transform.localPosition.y < 0)
         {
             EndEpisode();
         }
