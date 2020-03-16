@@ -6,7 +6,7 @@ public class UniRxSubjectObserverComponent : MonoBehaviour
 {
 	void Start()
 	{
-		GetComponent<UniRxSubjectComponent>()?.Subscribe(OnClickButton, _ => _.Contains("1"));
+		GetComponent<UniRxSubjectComponent>()?.Subscribe(OnClickButton, _ => _.Contains(" "));
 	}
 
 	void OnClickButton(string param)

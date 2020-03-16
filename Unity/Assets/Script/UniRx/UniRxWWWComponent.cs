@@ -1,24 +1,11 @@
-﻿using System;
+﻿using UnityEngine;
 using UniRx;
-using UnityEngine;
-using UnityEngine.SceneManagement;
 
-
-public class UniRxComponent : MonoBehaviour
+public class UniRxWWWComponent : MonoBehaviour
 {
-
-	void Start()
-	{
-		/// EveryUpdate
-		var clickStream = Observable.EveryUpdate()
-			.Where(_ => Input.GetMouseButtonDown(0));
-
-		clickStream.Buffer(clickStream.Throttle(TimeSpan.FromMilliseconds(250)))
-			.Where(xs => xs.Count >= 2)
-			.Subscribe(xs => Debug.Log("DoubleClick Detected! Count:" + xs.Count));
-		////////////////////////////////////////////////////////////////////////////
-
-
+    // Start is called before the first frame update
+    void Start()
+    {
 		/// ObservableWWW
 		ObservableWWW.Get("http://google.co.jp/").Subscribe(
 				x => Debug.Log(x.Substring(0, 100)), // onSuccess
@@ -45,4 +32,6 @@ public class UniRxComponent : MonoBehaviour
 		// pass notifier to WWW.Get/Post
 		ObservableWWW.Get("http://google.com/", progress: progressNotifier).Subscribe();
 	}
+
 }
+

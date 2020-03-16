@@ -19,7 +19,7 @@ public class UniRxSubjectComponent : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
     {
-		buttonList?.ForEach(_=>_.onClick.AddListener(() => subjectOnClick.OnNext(_.name)));
+		buttonList?.ForEach(_=>_.OnClickAsObservable().Subscribe(_2 => subjectOnClick.OnNext(_.name)));
 	}
 
 	public IDisposable Subscribe(Action<string> param, Func<string, bool> filter = null)

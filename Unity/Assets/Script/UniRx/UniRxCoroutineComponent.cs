@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UniRx;
 
@@ -32,5 +33,19 @@ public class UniRxCoroutineComponent : MonoBehaviour
 
 		// you can stop a coroutine by calling your subscription's Dispose.
 		cancel.Dispose();
+
+
+		/// Coroutine 보다 가볍고 정교한 코루틴
+		Observable.FromMicroCoroutine(YieldObservables).Subscribe();
 	}
+
+	public IEnumerator YieldObservables()
+	{
+		yield return Observable.Timer(TimeSpan.FromSeconds(1)).ToYieldInstruction();
+
+		yield return transform.ObserveEveryValueChanged(x => x.position).FirstOrDefault(p => p.x >= 100).ToYieldInstruction();
+
+		yield return ObservableWWW.Get("http://unity3d.com").ToYieldInstruction();
+	}
+
 }
